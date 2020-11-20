@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>To - Do List</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Start your project here-->
+    <section class="back_image">
+      <div class="todo">
+        <h3 class="text-center p-3" >To Do List
+          <i class="fas fa-list"></i>
+        </h3>
+        <form id="todo_form">
+          <div class="form-group p-3 input_background">
+            <input
+              type="text"
+              placeholder="Add Todo"
+              class="input_field"
+              id="todo_input"
+              required
+            />
+            <button class="btn btn-success" type="submit">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </form>
+        <!-- todos-->
+        <ul class="m-0 p-0" id="todoItems"></ul>
+      </div>
+    </section>
+    <!--add to lists -->
+    <script type="text/javascript">
+      const todo_form = document.getElementById("todo_form");
+      const todo_input = document.getElementById("todo_input");
+      const todoItems = document.getElementById("todoItems");
+      const arr = [];
+      todo_form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        arr.push({ todo_items: todo_input.value });
+        load_Function(arr);
+        todo_form.reset();
+      });
+
+      function load_Function(arr) {
+        let todoHtml = ``;
+        arr.forEach((item, index) => {
+          todoHtml += `
+          <li class="todo_lists p-3 m-1">
+            <h6 style="font-size: 24px; font-family: cursive;">${item.todo_items}</h6>
+            
+            <button class="btn btn-danger delete" id="${index}" >
+              <i class="fas fa-trash"></i>
+            </button>
+            
+          </li>
+          `;
+        });
+        todoItems.innerHTML = todoHtml;
+        //  delete to do lists
+        const deleteBtns = document.querySelectorAll(".delete");
+        deleteBtns.forEach((deleteBtn, index) => {
+          deleteBtn.addEventListener("click", function (e) {
+            arr.splice(e.target.id, 1);
+            console.log(e.target.id);
+            load_Function(arr);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
